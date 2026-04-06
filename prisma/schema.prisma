@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum OrderStatus {
+  PENDIENTE
+  PREPARANDO
+  SERVIDO
+  PAGADO
+}
+
+enum TableStatus {
+  LIBRE
+  OCUPADO
+  RESERVADO
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+//Mozos o empleados
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  lastName  String
+  imgUrl    String   @default("https://thumbs.dreamstime.com/b/mozo-joven-aislado-de-fondo-blanco-el-179066502.jpg")
+  username  String   @unique
+  password  String
+  tables    Table[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id           String        @id @default(cuid())
+  name         String
+  price        Decimal       @db.Decimal(10, 2)
+  orderDetails OrderDetail[]
+  category     Category      @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Order {
+  id           String        @id @default(cuid())
+  total        Decimal       @db.Decimal(10, 2)
+  status       OrderStatus   @default(PENDIENTE)
+  orderDetails OrderDetail[]
+  orderDate    DateTime      @default(now())
+  table        Table         @relation(fields: [tableId], references: [id])
+  tableId      String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model OrderDetail {
+  id        String   @id @default(cuid())
+  quantity  Int
+  price     Decimal  @db.Decimal(10, 2)
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  order     Order    @relation(fields: [orderId], references: [id])
+  orderId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Table {
+  id        String      @id @default(cuid())
+  name      String
+  status    TableStatus @default(LIBRE)
+  orders    Order[]
+  user      User?       @relation(fields: [userId], references: [id])
+  userId    String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}

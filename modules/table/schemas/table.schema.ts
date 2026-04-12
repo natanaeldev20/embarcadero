@@ -14,7 +14,7 @@ import z from "zod";
 export const tableSchema = z.object({
   id: z.string().cuid(),
   name: z.string().min(1, "El nombre de la mesa es requerido."),
-  status: z.enum(["LIBRE", "OCUPADO", "RESERVADO"]).default("LIBRE"),
+  status: z.enum(["LIBRE", "OCUPADO", "RESERVADO"]),
   user: z
     .object({
       name: z.string(),
@@ -25,8 +25,18 @@ export const tableSchema = z.object({
   userId: z.string().cuid().optional(),
 });
 
+// export const createTableSchema = z.object({
+//   name: z.string().min(1, "El nombre de la mesa es requerido."),
+//   status: z.enum(["LIBRE", "OCUPADO", "RESERVADO"]),
+//   userId: z.string().cuid().optional(),
+// });
+
 export const tableeSchema = tableSchema.omit({ userId: true });
-export const createTableSchema = tableSchema.omit({ id: true, user: true });
+export const createTableSchema = tableSchema.omit({
+  id: true,
+  user: true,
+  status: true,
+});
 export const updateTableSchema = tableSchema
   .omit({ id: true, user: true })
   .partial();

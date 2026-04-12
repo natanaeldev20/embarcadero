@@ -7,9 +7,7 @@ datasource db {
 }
 
 enum OrderStatus {
-  PENDIENTE
-  PREPARANDO
-  SERVIDO
+  ABIERTO
   PAGADO
 }
 
@@ -35,7 +33,7 @@ model User {
   imgUrl    String   @default("https://thumbs.dreamstime.com/b/mozo-joven-aislado-de-fondo-blanco-el-179066502.jpg")
   username  String   @unique
   password  String
-  tables    Table[]
+  orders    Order[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -54,13 +52,15 @@ model Product {
 model Order {
   id           String        @id @default(cuid())
   total        Decimal       @db.Decimal(10, 2)
-  status       OrderStatus   @default(PENDIENTE)
+  status       OrderStatus   @default(ABIERTO)
   orderDetails OrderDetail[]
   orderDate    DateTime      @default(now())
   table        Table         @relation(fields: [tableId], references: [id])
   tableId      String
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  user         User?         @relation(fields: [userId], references: [id])
+  userId       String?
 }
 
 model OrderDetail {
@@ -76,12 +76,11 @@ model OrderDetail {
 }
 
 model Table {
-  id        String      @id @default(cuid())
-  name      String
-  status    TableStatus @default(LIBRE)
-  orders    Order[]
-  user      User?       @relation(fields: [userId], references: [id])
-  userId    String?
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id     String      @id @default(cuid())
+  name   String
+  status TableStatus @default(LIBRE)
+  orders Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

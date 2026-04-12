@@ -11,17 +11,21 @@ import {
 export const getTables = async () => {
   try {
     const tables = await prisma.table.findMany({
-      select: {
-        id: true,
-        name: true,
-        status: true,
-        user: {
-          select: {
-            name: true,
-            lastName: true,
-            imgUrl: true,
+      include: {
+        orders: {
+          where: {
+            status: {
+              not: "PAGADO",
+            },
           },
+          include: {
+            user: true,
+          },
+          take: 1,
         },
+      },
+      orderBy: {
+        createdAt: "asc",
       },
     });
 
@@ -41,6 +45,33 @@ export const getTables = async () => {
   }
 };
 
+export const getTable = async (tableId: string) => {
+  try {
+    const table = await prisma.table.findUnique({
+      where: {
+        id: tableId,
+      },
+      select: {
+        name: true,
+        status: true,
+      },
+    });
+
+    return {
+      ok: true,
+      data: table,
+    };
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.error(error);
+    }
+
+    return {
+      ok: false,
+    };
+  }
+};
+
 export const createTableAction = async (rawData: CreateTable) => {
   const { data, success } = createTableSchema.safeParse(rawData);
 
@@ -53,7 +84,10 @@ export const createTableAction = async (rawData: CreateTable) => {
 
   try {
     const newTable = await prisma.table.create({
-      data,
+      data: {
+        status: "LIBRE",
+        name: data.name,
+      },
     });
 
     return {

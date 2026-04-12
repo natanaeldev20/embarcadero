@@ -13,7 +13,7 @@ export default {
 
         const user = await prisma.user.findUnique({
           where: {
-            username: data.username.toLowerCase().trim(),
+            username: data.username,
           },
         });
 

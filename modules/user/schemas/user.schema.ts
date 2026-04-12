@@ -16,14 +16,23 @@ export const userSchema = z.object({
   id: z.string().cuid(),
   name: z.string().min(1, "El nombre de usuario es requerido."),
   lastName: z.string().min(1, "El apellido de usuario es requerido."),
-  imgUrl: z.string().min(1, "La foto de perfil es requerida."),
+  imgUrl: z.string().min(1, "La foto de perfil es requerida.").optional(),
   username: z.string().min(1, "El nombre de usuario es requerido."),
-  password: z.string().min(1, "La contraseña es requerida."),
+  password: z.string().min(6, "La contraseña debe tener mas de 6 caracteres."),
 });
 
 export const userrSchema = userSchema.omit({ password: true });
 export const createUserSchema = userSchema.omit({ id: true });
-export const updateUserSchema = userSchema.omit({ id: true }).partial();
+export const updateUserSchema = userSchema
+  .omit({ id: true, password: true })
+  .partial()
+  .extend({
+    password: z
+      .string()
+      .min(6, "La contraseña debe tener mas de 6 caracteres.")
+      .optional()
+      .or(z.literal("")),
+  });
 
 export type User = z.infer<typeof userrSchema>;
 export type CreateUser = z.infer<typeof createUserSchema>;

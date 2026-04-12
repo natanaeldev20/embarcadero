@@ -61,9 +61,16 @@ export const createProductAction = async (rawData: CreateProduct) => {
       data,
     });
 
+    const parsedProduct = {
+      ...newProduct,
+      price: Number(newProduct.price),
+      createdAt: newProduct.createdAt.toISOString(),
+      updatedAt: newProduct.updatedAt.toISOString(),
+    };
+
     return {
       ok: true,
-      data: newProduct,
+      data: parsedProduct,
       message: "Producto creado con exito.",
     };
   } catch (error) {

@@ -14,7 +14,9 @@ import z from "zod";
 export const productSchema = z.object({
   id: z.string().cuid(),
   name: z.string().min(1, "El nombre es requerido."),
-  price: z.number().min(1),
+  price: z
+    .number("Debe ser un numero.")
+    .min(1, "El precio no puede ser menos que 1 sol."),
   categoryName: z.string(),
   categoryId: z.string().cuid(),
 });

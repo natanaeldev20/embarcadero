@@ -3,9 +3,17 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { getUserProfile } from "@/modules/user/server-actions/user.action";
 import Link from "next/link";
 
-export default async function ProfilePage() {
-  const user = await getUserProfile();
+interface User {
+  id: string;
+  name: string;
+  lastName: string;
+  imgUrl: string;
+  username: string;
+}
 
+export default async function ProfilePage() {
+  const userResponse = await getUserProfile();
+  const user: User | null = userResponse.data ?? null;
   return (
     <section>
       <Card className="max-w-3xl mx-auto">
@@ -14,13 +22,13 @@ export default async function ProfilePage() {
             <figure>
               <img
                 className="w-40 rounded-full aspect-square object-cover"
-                src={user.data?.imgUrl}
-                alt={user.data?.name}
+                src={user?.imgUrl}
+                alt={user?.name}
               />
             </figure>
             <div>
               <h2 className="text-3xl font-bold">
-                {user.data?.name} {user.data?.lastName}
+                {user?.name} {user?.lastName}
               </h2>
             </div>
           </div>

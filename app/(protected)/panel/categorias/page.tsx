@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Category } from "@/modules/category/schemas/category.schema";
 import { getCategories } from "@/modules/category/server-actions/category.action";
 import Link from "next/link";
 
 export default async function CategoriesPage() {
   const categoriesResponse = await getCategories();
-  const categories = categoriesResponse.data ?? [];
+  const categories: Category[] = categoriesResponse.data ?? [];
 
   return (
     <section className="p-4 md:p-6 max-w-7xl mx-auto space-y-6">

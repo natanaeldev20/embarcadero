@@ -2,9 +2,9 @@
 
 import prisma from "@/lib/db";
 import {
-  CreateCategory,
+  type CreateCategory,
   createCategorySchema,
-  UpdateCategory,
+  type UpdateCategory,
   updateCategorySchema,
 } from "../schemas/category.schema";
 

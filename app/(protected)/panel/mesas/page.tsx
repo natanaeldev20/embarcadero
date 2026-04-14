@@ -12,14 +12,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getTables } from "@/modules/table/server-actions/table.action";
+import {
+  getTables,
+  TableWithOrders,
+} from "@/modules/table/server-actions/table.action";
 import Link from "next/link";
 
 export default async function TablesPage() {
-  const tables = await getTables();
+  const tablesResponse = await getTables();
+  const tables: TableWithOrders[] = tablesResponse.data ?? [];
 
-  if (!tables?.ok) {
-    return <p className="text-red-500">{tables?.message}</p>;
+  if (!tablesResponse?.ok) {
+    return <p className="text-red-500">{tablesResponse?.message}</p>;
   }
 
   return (
@@ -34,14 +38,14 @@ export default async function TablesPage() {
       </div>
 
       {/* EMPTY STATE */}
-      {tables.data?.length === 0 ? (
+      {tables.length === 0 ? (
         <div className="text-center text-muted-foreground py-10">
           No hay mesas registradas
         </div>
       ) : (
         /* GRID RESPONSIVE */
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
-          {tables.data?.map((t) => {
+          {tables.map((t) => {
             const activeOrder = t.orders[0];
             const waiter = activeOrder?.user;
 

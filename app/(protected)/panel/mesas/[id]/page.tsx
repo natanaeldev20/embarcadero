@@ -9,9 +9,18 @@ import {
 } from "@/components/ui/table";
 import { CloseOrderButton } from "@/modules/order/components/CloseOrderButton";
 import { ProductsOrder } from "@/modules/order/components/ProductsOrder";
-import { getOrCreateOrderAction } from "@/modules/order/server-actions/order.action";
+import {
+  getOrCreateOrderAction,
+  OrderWithDetails,
+} from "@/modules/order/server-actions/order.action";
 import { getProducts } from "@/modules/product/server-actions/product.action";
 import { getTable } from "@/modules/table/server-actions/table.action";
+import { TableStatus } from "@prisma/client";
+
+interface Table {
+  name: string;
+  status: TableStatus;
+}
 
 export default async function TablePage({
   params,
@@ -20,13 +29,18 @@ export default async function TablePage({
 }) {
   const { id } = await params;
 
-  const [table, orderResponse, productsResponse] = await Promise.all([
+  const [tableResponse, orderResponse, productsResponse] = await Promise.all([
     getTable(id),
     getOrCreateOrderAction(id),
     getProducts(),
   ]);
 
-  const order = orderResponse.data;
+  if (!tableResponse.data) {
+    throw new Error("No existe la mesa");
+  }
+
+  const table: Table = tableResponse.data;
+  const order: OrderWithDetails | null = orderResponse.data ?? null;
   const products = productsResponse.data ?? [];
 
   return (
@@ -34,10 +48,8 @@ export default async function TablePage({
       {/* HEADER */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold">
-            Mesa: {table.data?.name}
-          </h1>
-          <p className="text-gray-500">{table.data?.status}</p>
+          <h1 className="text-2xl md:text-3xl font-bold">Mesa: {table.name}</h1>
+          <p className="text-gray-500">{table.status}</p>
         </div>
 
         <div className="bg-muted px-4 py-2 rounded-xl shadow-sm">

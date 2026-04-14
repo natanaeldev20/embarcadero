@@ -1,9 +1,9 @@
 "use server";
 import prisma from "@/lib/db";
 import {
-  CreateUser,
+  type CreateUser,
   createUserSchema,
-  UpdateUser,
+  type UpdateUser,
   updateUserSchema,
 } from "../schemas/user.schema";
 import bcrypt from "bcryptjs";

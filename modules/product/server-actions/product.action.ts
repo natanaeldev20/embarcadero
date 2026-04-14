@@ -2,9 +2,9 @@
 
 import prisma from "@/lib/db";
 import {
-  CreateProduct,
+  type CreateProduct,
   createProductSchema,
-  UpdateProduct,
+  type UpdateProduct,
   updateProductSchema,
 } from "../schemas/product.schema";
 

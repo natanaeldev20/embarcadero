@@ -16,8 +16,17 @@ import { DeleteUserButton } from "@/modules/user/components/DeleteUserButton";
 import { getsUsers } from "@/modules/user/server-actions/user.action";
 import Link from "next/link";
 
+interface User {
+  id: string;
+  name: string;
+  lastName: string;
+  imgUrl: string;
+  username: string;
+}
+
 export default async function UsersPage() {
-  const users = await getsUsers();
+  const usersResponse = await getsUsers();
+  const users: User[] = usersResponse.data ?? [];
 
   return (
     <section className="p-4 md:p-6 max-w-6xl mx-auto space-y-6">
@@ -56,7 +65,7 @@ export default async function UsersPage() {
                 </TableHeader>
 
                 <TableBody>
-                  {users.data?.map((u) => (
+                  {users.map((u) => (
                     <TableRow key={u.id}>
                       {/* 👤 USUARIO */}
                       <TableCell className="flex items-center gap-3">

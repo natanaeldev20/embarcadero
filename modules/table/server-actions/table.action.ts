@@ -2,11 +2,22 @@
 
 import prisma from "@/lib/db";
 import {
-  CreateTable,
+  type CreateTable,
   createTableSchema,
-  UpdateTable,
+  type UpdateTable,
   updateTableSchema,
 } from "../schemas/table.schema";
+import { Prisma } from "@prisma/client";
+
+export type TableWithOrders = Prisma.TableGetPayload<{
+  include: {
+    orders: {
+      include: {
+        user: true;
+      };
+    };
+  };
+}>;
 
 export const getTables = async () => {
   try {

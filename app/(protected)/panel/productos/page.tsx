@@ -3,10 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getProducts } from "@/modules/product/server-actions/product.action";
 import Link from "next/link";
+import { Product } from "@/modules/product/schemas/product.schema";
 
 export default async function ProductsPage() {
   const productsResponse = await getProducts();
-  const products = productsResponse.data ?? [];
+  const products: Product[] = productsResponse.data ?? [];
 
   return (
     <section className="p-4 md:p-6 max-w-7xl mx-auto space-y-6">

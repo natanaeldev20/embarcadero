@@ -4,6 +4,23 @@ import { auth } from "@/auth";
 import prisma from "@/lib/db";
 import { Prisma } from "@prisma/client";
 
+export type OrderWithDetails = Prisma.OrderGetPayload<{
+  include: {
+    orderDetails: {
+      include: {
+        product: {
+          select: {
+            id: true;
+            category: true;
+            name: true;
+            price: true;
+          };
+        };
+      };
+    };
+  };
+}>;
+
 export const getOrCreateOrderAction = async (tableId: string) => {
   try {
     const session = await auth();

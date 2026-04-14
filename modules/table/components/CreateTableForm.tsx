@@ -1,7 +1,7 @@
 "use client";
 
 import { Controller, useForm } from "react-hook-form";
-import { CreateTable, createTableSchema } from "../schemas/table.schema";
+import { type CreateTable, createTableSchema } from "../schemas/table.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Card,

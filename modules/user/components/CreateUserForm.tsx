@@ -1,7 +1,7 @@
 "use client";
 
 import { Controller, useForm } from "react-hook-form";
-import { CreateUser, createUserSchema } from "../schemas/user.schema";
+import { type CreateUser, createUserSchema } from "../schemas/user.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserAction } from "../server-actions/user.action";
 import { toast } from "react-toastify";

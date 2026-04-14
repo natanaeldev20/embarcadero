@@ -1,7 +1,10 @@
 "use client";
 
 import { Controller, useForm } from "react-hook-form";
-import { CreateProduct, createProductSchema } from "../schemas/product.schema";
+import {
+  type CreateProduct,
+  createProductSchema,
+} from "../schemas/product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createProductAction } from "../server-actions/product.action";
 import { toast } from "react-toastify";

@@ -1,7 +1,7 @@
 "use client";
 
 import { Controller, useForm } from "react-hook-form";
-import { UpdateUser, updateUserSchema } from "../schemas/user.schema";
+import { type UpdateUser, updateUserSchema } from "../schemas/user.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateUserAction } from "../server-actions/user.action";
 import { toast } from "react-toastify";

@@ -2,7 +2,7 @@
 
 import { Controller, useForm } from "react-hook-form";
 import {
-  CreateCategory,
+  type CreateCategory,
   createCategorySchema,
 } from "../schemas/category.schema";
 import { zodResolver } from "@hookform/resolvers/zod";

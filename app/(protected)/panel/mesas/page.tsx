@@ -45,7 +45,7 @@ export default async function TablesPage() {
         </div>
       ) : (
         /* GRID RESPONSIVE */
-        <AutoRefresh>
+        <AutoRefresh interval={2000}>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
             {tables.map((t) => {
               const activeOrder = t.orders[0];

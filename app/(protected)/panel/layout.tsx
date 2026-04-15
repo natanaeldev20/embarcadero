@@ -22,10 +22,6 @@ export default async function PanelLayout({
               <Button variant="ghost">Inicio</Button>
             </Link>
 
-            {/* <Link href="/panel/usuarios">
-              <Button variant="ghost">Usuarios</Button>
-            </Link> */}
-
             <Link href="/panel/mesas">
               <Button variant="ghost">Mesas</Button>
             </Link>

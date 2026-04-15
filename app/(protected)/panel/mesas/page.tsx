@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { AutoRefresh } from "@/global/components/AutoRefresh";
 import {
   getTables,
   TableWithOrders,
@@ -44,61 +45,66 @@ export default async function TablesPage() {
         </div>
       ) : (
         /* GRID RESPONSIVE */
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
-          {tables.map((t) => {
-            const activeOrder = t.orders[0];
-            const waiter = activeOrder?.user;
+        <AutoRefresh>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
+            {tables.map((t) => {
+              const activeOrder = t.orders[0];
+              const waiter = activeOrder?.user;
 
-            return (
-              <Link key={t.id} href={`/panel/mesas/${t.id}`}>
-                <Card className="rounded-2xl shadow-sm hover:shadow-md transition cursor-pointer border hover:border-primary">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-center text-lg font-semibold">
-                      {t.name}
-                    </CardTitle>
-                  </CardHeader>
+              return (
+                <Link key={t.id} href={`/panel/mesas/${t.id}`}>
+                  <Card className="rounded-2xl shadow-sm hover:shadow-md transition cursor-pointer border hover:border-primary">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-center text-lg font-semibold">
+                        {t.name}
+                      </CardTitle>
+                    </CardHeader>
 
-                  <CardContent className="flex justify-center py-4">
-                    <Avatar className="w-16 h-16">
-                      {waiter ? (
-                        <>
-                          <AvatarImage src={waiter.imgUrl} alt={waiter.name} />
-                          <AvatarFallback>
-                            {waiter.name?.charAt(0)}
-                          </AvatarFallback>
-                          <AvatarBadge className="bg-green-500" />
-                        </>
-                      ) : (
-                        <>
-                          <AvatarImage
-                            src="https://cdn-icons-png.flaticon.com/512/9972/9972749.png"
-                            alt="Sin mozo"
-                          />
-                          <AvatarFallback>?</AvatarFallback>
-                          <AvatarBadge className="bg-gray-400" />
-                        </>
-                      )}
-                    </Avatar>
-                  </CardContent>
+                    <CardContent className="flex justify-center py-4">
+                      <Avatar className="w-16 h-16">
+                        {waiter ? (
+                          <>
+                            <AvatarImage
+                              src={waiter.imgUrl}
+                              alt={waiter.name}
+                            />
+                            <AvatarFallback>
+                              {waiter.name?.charAt(0)}
+                            </AvatarFallback>
+                            <AvatarBadge className="bg-green-500" />
+                          </>
+                        ) : (
+                          <>
+                            <AvatarImage
+                              src="https://cdn-icons-png.flaticon.com/512/9972/9972749.png"
+                              alt="Sin mozo"
+                            />
+                            <AvatarFallback>?</AvatarFallback>
+                            <AvatarBadge className="bg-gray-400" />
+                          </>
+                        )}
+                      </Avatar>
+                    </CardContent>
 
-                  <CardFooter className="flex justify-center">
-                    <span
-                      className={`text-xs px-3 py-1 rounded-full font-semibold ${
-                        t.status === "LIBRE"
-                          ? "bg-green-100 text-green-700"
-                          : t.status === "OCUPADO"
-                            ? "bg-red-100 text-red-700"
-                            : "bg-yellow-100 text-yellow-700"
-                      }`}
-                    >
-                      {t.status}
-                    </span>
-                  </CardFooter>
-                </Card>
-              </Link>
-            );
-          })}
-        </div>
+                    <CardFooter className="flex justify-center">
+                      <span
+                        className={`text-xs px-3 py-1 rounded-full font-semibold ${
+                          t.status === "LIBRE"
+                            ? "bg-green-100 text-green-700"
+                            : t.status === "OCUPADO"
+                              ? "bg-red-100 text-red-700"
+                              : "bg-yellow-100 text-yellow-700"
+                        }`}
+                      >
+                        {t.status}
+                      </span>
+                    </CardFooter>
+                  </Card>
+                </Link>
+              );
+            })}
+          </div>
+        </AutoRefresh>
       )}
     </section>
   );

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { SiteHeader } from "@/global/components/site-header";
 import { Category } from "@/modules/category/schemas/category.schema";
 import { getCategories } from "@/modules/category/server-actions/category.action";
 import Link from "next/link";
@@ -9,7 +10,7 @@ export default async function CategoriesPage() {
   const categories: Category[] = categoriesResponse.data ?? [];
 
   return (
-    <section className="p-4 md:p-6 max-w-7xl mx-auto space-y-6">
+    <section className="p-4 md:p-6 space-y-6">
       {/* HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <h1 className="text-2xl md:text-3xl font-bold">Categorías</h1>
@@ -49,10 +50,6 @@ export default async function CategoriesPage() {
                   {c.name}
                 </CardTitle>
               </CardHeader>
-
-              <CardContent className="text-center">
-                <p className="text-xs text-muted-foreground">Categoría</p>
-              </CardContent>
             </Card>
           ))}
         </div>

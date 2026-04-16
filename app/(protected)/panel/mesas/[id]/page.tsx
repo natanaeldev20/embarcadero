@@ -44,7 +44,7 @@ export default async function TablePage({
   const products = productsResponse.data ?? [];
 
   return (
-    <section className="p-4 md:p-6 max-w-7xl mx-auto space-y-6">
+    <section className="p-4 md:p-6 max-w-7xl space-y-6">
       {/* HEADER */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
         <div>

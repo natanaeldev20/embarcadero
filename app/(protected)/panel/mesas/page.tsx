@@ -28,7 +28,7 @@ export default async function TablesPage() {
   }
 
   return (
-    <section className="p-4 md:p-6 max-w-7xl mx-auto space-y-6">
+    <section className="p-4 md:p-6 space-y-6">
       {/* HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <h2 className="text-2xl md:text-3xl font-bold">Mesas</h2>

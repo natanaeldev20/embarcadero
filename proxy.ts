@@ -4,14 +4,14 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-// export default auth((req) => {
-//   const isLoggedIn = !!req.auth;
-//   const isProtectedRoute = req.nextUrl.pathname.startsWith("/dashboard");
+export default auth((req) => {
+  const isLoggedIn = !!req.auth;
+  const isProtectedRoute = req.nextUrl.pathname.startsWith("/panel");
 
-//   if (isProtectedRoute && !isLoggedIn) {
-//     return NextResponse.redirect(new URL("/", req.nextUrl));
-//   }
-// });
+  if (isProtectedRoute && !isLoggedIn) {
+    return NextResponse.redirect(new URL("/iniciar-sesion", req.nextUrl));
+  }
+});
 
 // const protectedRoutes = ["/dashboard", "/profile", "/admin"];
 
@@ -19,9 +19,9 @@ import { NextResponse } from "next/server";
 //   req.nextUrl.pathname.startsWith(route)
 // );
 
-// export const config = {
-//   matcher: ["/((?!api|_next|favicon.ico).*)"],
-// };
+export const config = {
+  matcher: ["/((?!api|_next|favicon.ico).*)"],
+};
 
 // //Para no volver a login
 // if (!isProtectedRoute && isLoggedIn && req.nextUrl.pathname === "/login") {
@@ -36,4 +36,4 @@ import { NextResponse } from "next/server";
 //     return NextResponse.redirect(new URL("/iniciar-sesion", req.nextUrl));
 //   }
 // });
-export default auth;
+// export default auth;

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Product } from "@/modules/product/schemas/product.schema";
 import { addProductToOrder } from "../server-actions/order.action";
 import { toast } from "react-toastify";
+import { Search, Plus } from "lucide-react"; // Iconos para un look más pro
 
 interface Props {
   products: Product[];
@@ -20,31 +21,33 @@ export const ProductsOrder = ({ products, orderId }: Props) => {
   const [search, setSearch] = useState("");
   const router = useRouter();
 
-  // 🔍 Filtrado
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
-    <Card className="rounded-2xl shadow-md">
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold">
-          Agregar productos
+    <Card className="border-none shadow-xl bg-card/50 backdrop-blur-sm rounded-3xl">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-xl font-bold tracking-tight text-primary">
+          Catálogo de Productos
         </CardTitle>
       </CardHeader>
 
       <CardContent>
-        {/* 🔍 Input buscador */}
-        <input
-          type="text"
-          placeholder="Buscar producto..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full mb-4 p-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-primary"
-        />
+        {/* 🔍 Buscador Modernizado */}
+        <div className="relative mb-6">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="¿Qué busca el cliente?"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 bg-background border-none ring-1 ring-border rounded-2xl text-sm transition-all focus:ring-2 focus:ring-primary outline-none shadow-sm"
+          />
+        </div>
 
-        <ScrollArea className="h-[420px] pr-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <ScrollArea className="h-[450px] pr-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {filteredProducts.length > 0 ? (
               filteredProducts.map((p) => (
                 <Button
@@ -53,31 +56,35 @@ export const ProductsOrder = ({ products, orderId }: Props) => {
                   onClick={() =>
                     startTransition(async () => {
                       const res = await addProductToOrder(orderId, p.id);
-
                       if (!res.ok) {
                         toast.error(res.message);
                         return;
                       }
-
                       toast.success(res.message);
                       router.refresh();
                     })
                   }
                   variant="outline"
-                  className="h-auto flex flex-col items-start p-3 rounded-xl hover:bg-muted transition"
+                  className="group relative h-auto flex flex-row items-center justify-between p-4 rounded-2xl border-muted bg-background hover:border-primary/50 hover:bg-primary/[0.02] transition-all duration-200 text-left overflow-hidden"
                 >
-                  <span className="font-semibold text-sm text-left">
-                    {p.name}
-                  </span>
-                  <span className="text-xs text-muted-foreground mt-1">
-                    S/. {Number(p.price).toFixed(2)}
-                  </span>
+                  <div className="flex flex-col gap-1 pr-2 max-w-[80%]">
+                    <span className="font-bold text-sm leading-tight text-foreground break-words whitespace-normal">
+                      {p.name}
+                    </span>
+                    <span className="text-xs font-medium text-primary">
+                      S/. {Number(p.price).toFixed(2)}
+                    </span>
+                  </div>
+
+                  <div className="bg-primary/10 text-primary p-2 rounded-full group-hover:bg-primary group-hover:text-white transition-colors">
+                    <Plus className="h-4 w-4" />
+                  </div>
                 </Button>
               ))
             ) : (
-              <p className="text-sm text-muted-foreground col-span-2 text-center">
-                No se encontraron productos
-              </p>
+              <div className="col-span-full py-10 flex flex-col items-center justify-center text-muted-foreground">
+                <p className="text-sm">No hay productos que coincidan</p>
+              </div>
             )}
           </div>
         </ScrollArea>

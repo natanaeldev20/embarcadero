@@ -11,7 +11,7 @@ export default async function CreateProductPage() {
   const categories = categoriesResponse.data ?? [];
 
   return (
-    <div>
+    <div className="p-6">
       <CreateProductForm categories={categories} />
     </div>
   );

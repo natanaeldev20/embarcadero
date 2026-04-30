@@ -2,7 +2,7 @@ import { CreateCategoryForm } from "@/modules/category/components/CreateCategory
 
 export default function CreateCategoryPage() {
   return (
-    <div>
+    <div className="p-6">
       <CreateCategoryForm />
     </div>
   );

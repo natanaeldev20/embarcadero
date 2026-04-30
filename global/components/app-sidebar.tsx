@@ -25,25 +25,16 @@ export function AppSidebar({ data, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              className="data-[slot=sidebar-menu-button]:p-1.5!"
-            >
-              <a href="/panel">
-                <img
-                  src={`https://media.tenor.com/u_eBntWlBWUAAAAj/kit-brawl-stars.gif`}
-                  alt={`Icon`}
-                  className="w-12"
-                />
-                <span className="text-base font-semibold">
-                  KitCode Solutions
-                </span>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <div className="space-y-2">
+          <figure className="w-full">
+            <img
+              className="w-25 mx-auto"
+              src="https://static.wikia.nocookie.net/brawlstars/images/0/08/Kit_Pin-Neutral.png/revision/latest?cb=20231214122300"
+              alt="Logo de la empresa"
+            />
+          </figure>
+          <h2 className="text-2xl font-bold text-center">KitCode Solutions</h2>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

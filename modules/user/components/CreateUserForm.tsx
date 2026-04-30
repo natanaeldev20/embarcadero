@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const CreateUserForm = () => {
   const form = useForm<CreateUser>({
@@ -150,7 +151,7 @@ export const CreateUserForm = () => {
           </FieldGroup>
         </form>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-col space-y-4">
         <Field orientation={"horizontal"}>
           <Button
             className="w-full font-semibold"
@@ -162,6 +163,9 @@ export const CreateUserForm = () => {
               : "Crear nuevo usuario"}
           </Button>
         </Field>
+        <Link href="/iniciar-sesion" className="hover:underline">
+          Volver a iniciar sesion
+        </Link>
       </CardFooter>
     </Card>
   );

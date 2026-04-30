@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 export const FormAuth = () => {
   const router = useRouter();
@@ -51,7 +52,9 @@ export const FormAuth = () => {
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">Iniciar Sesion</CardTitle>
-        <CardDescription>Bienvenido a tu sistema favorito.</CardDescription>
+        <CardDescription>
+          Bienvenido a nuestro sistema para restaurantes.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <form id="form-auth" onSubmit={form.handleSubmit(onSubmit)}>
@@ -95,12 +98,15 @@ export const FormAuth = () => {
           </FieldGroup>
         </form>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-col space-y-4">
         <Field orientation="horizontal">
           <Button className="w-full" form="form-auth" type="submit">
             {form.formState.isSubmitting ? "Ingresando..." : "Iniciar Sesion"}
           </Button>
         </Field>
+        <Link href="/crear-cuenta" className="hover:underline">
+          Crear nueva cuenta
+        </Link>
       </CardFooter>
     </Card>
   );

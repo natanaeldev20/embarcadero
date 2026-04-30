@@ -6,7 +6,7 @@ export default async function EdithProfilePage() {
 
   if (!user.data) return null;
   return (
-    <div>
+    <div className="p-6">
       <EditUserForm data={user.data} userId={user.data.id} />
     </div>
   );

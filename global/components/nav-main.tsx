@@ -11,13 +11,13 @@ import {
   IconSearch,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 
@@ -42,11 +42,19 @@ export function NavMain({
     icon: IconName;
   }[];
 }) {
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  const handleClose = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  };
+
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
-        <SidebarMenu>
-          <Link href={`/panel/mesas`}>
+        <Link href={`/panel/mesas`} onClick={handleClose}>
+          <SidebarMenu>
             <SidebarMenuItem className="flex items-center gap-2">
               <SidebarMenuButton
                 tooltip="Quick Create"
@@ -56,13 +64,13 @@ export function NavMain({
                 <span>Realizar un pedido</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
-          </Link>
-        </SidebarMenu>
+          </SidebarMenu>
+        </Link>
         <SidebarMenu>
           {items.map((item) => {
             const Icon = iconMap[item.icon];
             return (
-              <Link href={item.url} key={item.title}>
+              <Link href={item.url} key={item.title} onClick={handleClose}>
                 <SidebarMenuItem>
                   <SidebarMenuButton tooltip={item.title}>
                     {item.icon && <Icon />}

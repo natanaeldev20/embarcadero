@@ -15,10 +15,10 @@ export default async function ProfilePage() {
   const userResponse = await getUserProfile();
   const user: User | null = userResponse.data ?? null;
   return (
-    <section>
+    <section className="p-6">
       <Card className="max-w-3xl mx-auto">
-        <CardHeader className="w-full flex flex-row items-center justify-between">
-          <div className="flex flex-row gap-8 items-center">
+        <CardHeader className="w-full flex flex-col gap-4 lg:flex-row items-center justify-between">
+          <div className="flex flex-col gap-4 lg:flex-row lg:gap-8  items-center">
             <figure>
               <img
                 className="w-40 rounded-full aspect-square object-cover"
@@ -27,7 +27,7 @@ export default async function ProfilePage() {
               />
             </figure>
             <div>
-              <h2 className="text-3xl font-bold">
+              <h2 className="text-center lg:text-start text-3xl font-bold">
                 {user?.name} {user?.lastName}
               </h2>
             </div>
